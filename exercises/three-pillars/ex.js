@@ -5,27 +5,44 @@ class Bookshelf {
 
 	// TODO: define methods `addFavoriteBook(..)`
 	// and `printFavoriteBooks()`
-}
 
-function addFavoriteBook(bookName) {
-	if (!bookName.includes("Great")) {
-		favoriteBooks.push(bookName);
+	addFavoriteBook(bookName) {
+		if (!bookName.includes("Great")) {
+			this.favoriteBooks.push(bookName);
+		}
 	}
-}
 
-function printFavoriteBooks() {
-	console.log(`Favorite Books: ${favoriteBooks.length}`);
-	for (let bookName of favoriteBooks) {
-		console.log(bookName);
+	printFavoriteBooks() {
+		console.log(`Favorite Books: ${String(this.favoriteBooks.length)}`);
+		for (let bookName of this.favoriteBooks) {
+			console.log(bookName);
+		}
 	}
+
 }
 
-function loadBooks( /* .. */ ) {
+
+
+// receive Bookshelf
+
+// 4. `loadBooks(..)` should call the provided `fakeAjax(..)`, using `BOOK_API` as the URL and an inline function expression as // the callback.
+
+// 5. The callback will be passed an array of book names. Loop through this array, passing each book name to the //  // `addFavoriteBook(..)` method of the `Bookshelf` instance passed to `loadBooks(..)`. Then call the `printFavoriteBooks()` method.
+
+function loadBooks( cBookshelf) {
 	// TODO: call fakeAjax( .. );
+	fakeAjax(BOOK_API,function loadarray(names) {
+		for(let name of names){ // use let
+			cBookshelf.addFavoriteBook(name);
+		}
+		cBookshelf.printFavoriteBooks();
+	});
 }
 
 var BOOK_API = "https://some.url/api";
 
+var books = new Bookshelf;
+loadBooks(books);
 
 // ***********************
 
@@ -41,3 +58,10 @@ function fakeAjax(url,cb) {
 		]);
 	},500);
 }
+
+// 2019/9/1
+// three pillars of JS: 
+// 1:Types / Coercion, 
+// 2:Scope / Closures, and 
+// 3:`this` / Prototypes.
+// Hint: `class` methods don't use the `function` keyword, just their name.
